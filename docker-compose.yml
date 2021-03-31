@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+  gatsby-ui-2:
+    container_name: gatsby-ui-2
+    build:
+      context: .
+      dockerfile: ./docker-config/gatsby-ui/Dockerfile
+    ports:
+      - "8000:8000" # gatsby
+      - "6006:6006" # storybook
+    volumes:
+       - ./app:/app
+       - /app/node_modules
+    # command: tail -f /dev/null
+    command: bash -c "npm run develop && npm run storybook"
