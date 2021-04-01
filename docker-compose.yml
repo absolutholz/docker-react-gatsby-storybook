@@ -8,9 +8,21 @@ services:
       dockerfile: ./docker-config/gatsby-ui/Dockerfile
     ports:
       - "8000:8000" # gatsby
+    volumes:
+       - ./app:/app
+       - /app/node_modules
+    command: bash -c "npm run develop"
+  storybook:
+    container_name: storybook
+    build:
+      context: .
+      dockerfile: ./docker-config/storybook/Dockerfile
+    ports:
       - "6006:6006" # storybook
     volumes:
        - ./app:/app
        - /app/node_modules
+    command: bash -c "npm run storybook"
+    #   "storybook": "NODE_ENV=test start-storybook -p 6006 -s ./public",
+
     # command: tail -f /dev/null
-    command: bash -c "npm run develop && npm run storybook"
