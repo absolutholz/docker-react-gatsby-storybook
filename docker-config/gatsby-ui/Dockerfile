@@ -1,8 +1,18 @@
-FROM node:14
+# https://valenciandigital.com/blog/containerizing-a-gatsbyjs-site-with-docker-compose
+
+FROM node:alpine
+
+RUN yarn global add gatsby-cli && \
+	yarn global add @storybook/cli
+
+EXPOSE 8000
+EXPOSE 6006
 
 WORKDIR /app
+COPY ./app/package.json /app
+COPY ./app/yarn.lock /app
 
-COPY ./package*.json ./
+RUN yarn install && yarn cache clean
+COPY . /app
 
-RUN npm install -g gatsby-cli
-RUN npm install
+CMD ["yarn", "develop"]

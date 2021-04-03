@@ -1,28 +1,18 @@
-version: '3'
+version: "3.8"
 
 services:
-  gatsby-ui-2:
-    container_name: gatsby-ui-2
+  gatsby:
     build:
       context: .
       dockerfile: ./docker-config/gatsby-ui/Dockerfile
     ports:
-      - "8000:8000" # gatsby
+      - "8000:8000"
+      - "6006:6006"
     volumes:
-       - ./app:/app
-       - /app/node_modules
-    command: bash -c "npm run develop"
-  storybook:
-    container_name: storybook
-    build:
-      context: .
-      dockerfile: ./docker-config/storybook/Dockerfile
-    ports:
-      - "6006:6006" # storybook
-    volumes:
-       - ./app:/app
-       - /app/node_modules
-    command: bash -c "npm run storybook"
-    #   "storybook": "NODE_ENV=test start-storybook -p 6006 -s ./public",
-
-    # command: tail -f /dev/null
+      - /app/node_modules
+      - ./app:/app
+    environment:
+      - NODE_ENV=development
+      - GATSBY_WEBPACK_PUBLICPATH=/ # https://blog.konnor.site/javascript/setting-up-gatsby-with-docker/
+      - GATSBY_TELEMETRY_DISABLED=1 # https://clubmate.fi/disable-gatsby-telemetry
+    # command: gatsby develop -H 0.0.0.0
