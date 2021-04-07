@@ -1,3 +1,5 @@
+import './_paragraph.scss';
+
 export default {
 	title: 'Semantics/Paragraph',
 };

@@ -1,10 +1,10 @@
+import './_anchor.scss';
+
 export default {
 	title: 'Semantics/Anchor',
 };
 
-const Template = (args) => <a href="#">{ args.content }</a>;
-
-export const Anchor = Template.bind({});
+export const Anchor = ((args) => <a href="#">{ args.content }</a>).bind({});
 Anchor.args = {
 	content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
 };
